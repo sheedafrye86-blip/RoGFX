@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox Dev Studio Hub</title>
+    <title>Roblox Luau Script Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,111 +12,61 @@
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="brand">
-                <div class="brand-icon">⚡</div>
-                <span>Studio Hub</span>
+                <div class="brand-icon">📜</div>
+                <span>Luau Studio</span>
             </div>
             <nav class="nav-menu">
-                <button class="nav-item active" onclick="switchTab('thumbnail')">
-                    <span>🖼️</span> Thumbnail Maker
-                </button>
-                <button class="nav-item" onclick="switchTab('script')">
-                    <span>📜</span> Luau Generator
+                <button class="nav-item active">
+                    <span>⚡</span> Script Generator
                 </button>
             </nav>
             <div class="sidebar-footer">
-                <span class="status-dot"></span> Online Editor
+                <span class="status-dot"></span> Luau Engine Active
             </div>
         </aside>
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <!-- THUMBNAIL GENERATOR TAB -->
-            <section id="thumbnail-tab" class="tab-section active">
-                <header class="section-header">
-                    <h1>Simulator Thumbnail Generator</h1>
-                    <p>Create high-CTR Roblox simulator thumbnails with custom text, floating stats, and backgrounds.</p>
-                </header>
-
-                <div class="generator-grid">
-                    <!-- Controls Panel -->
-                    <div class="control-panel card">
-                        <h3>Thumbnail Settings</h3>
-                        
-                        <div class="input-group">
-                            <label>Top Banner Text</label>
-                            <input type="text" id="thumbTopText" value="+10M QUETTA" oninput="drawThumbnail()">
-                        </div>
-
-                        <div class="input-group">
-                            <label>Floating Stat 1</label>
-                            <input type="text" id="thumbStat1" value="+1 CASH" oninput="drawThumbnail()">
-                        </div>
-
-                        <div class="input-group">
-                            <label>Floating Stat 2</label>
-                            <input type="text" id="thumbStat2" value="+999Q CASH" oninput="drawThumbnail()">
-                        </div>
-
-                        <div class="input-group">
-                            <label>Avatar Expression / Style</label>
-                            <select id="thumbAvatarStyle" onchange="drawThumbnail()">
-                                <option value="sad">Bacon Hair (Sad)</option>
-                                <option value="shocked">Bacon Hair (Shocked/OP)</option>
-                            </select>
-                        </div>
-
-                        <div class="input-group">
-                            <label>Background Theme</label>
-                            <select id="thumbBgTheme" onchange="drawThumbnail()">
-                                <option value="portal">Glowing Purple Portal</option>
-                                <option value="sky">Bright Blue Sky & Grid</option>
-                            </select>
-                        </div>
-
-                        <button class="btn-primary" onclick="downloadThumbnail()">📥 Download Thumbnail (.png)</button>
-                    </div>
-
-                    <!-- Canvas Preview -->
-                    <div class="preview-panel card">
-                        <h3>Live Preview (1280 x 720)</h3>
-                        <div class="canvas-container">
-                            <canvas id="thumbnailCanvas" width="1280" height="720"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- LUAU SCRIPT GENERATOR TAB -->
-            <section id="script-tab" class="tab-section">
+            <section class="tab-section active">
                 <header class="section-header">
                     <h1>Roblox Luau Script Generator</h1>
-                    <p>Generate clean, production-ready Roblox Studio scripts instantly from your prompts.</p>
+                    <p>Build production-ready Roblox Studio scripts instantly from custom prompts and game mechanics.</p>
                 </header>
 
                 <div class="script-grid">
+                    <!-- Control Panel -->
                     <div class="control-panel card">
                         <h3>Script Parameters</h3>
+                        
                         <div class="input-group">
-                            <label>Script Template</label>
-                            <select id="scriptType">
+                            <label>Script Template Category</label>
+                            <select id="scriptType" onchange="updateDefaultPrompt()">
                                 <option value="zombie">Zombie Kill-Tracking Leaderboard</option>
-                                <option value="mm2">Murder Mystery 2 Role Shuffler</option>
-                                <option value="simulator">Simulator Clicker & Multiplier</option>
+                                <option value="mm2">Murder Mystery 2 Role Shuffler & Map Voting</option>
+                                <option value="simulator">Simulator Clicker & Multiplier System</option>
+                                <option value="gui">Dark-Themed Sidebar & HUD GUI Toggle</option>
+                                <option value="combat">Custom Free-for-All Combat & Overhead Health</option>
                             </select>
                         </div>
+
                         <div class="input-group">
                             <label>Custom Instructions / Prompt</label>
-                            <textarea id="scriptPrompt" rows="4" placeholder="e.g. Add a 2x coin multiplier event toggle..."></textarea>
+                            <textarea id="scriptPrompt" rows="5" placeholder="e.g. Add a 2x coin multiplier event toggle and save stats automatically..."></textarea>
                         </div>
+
                         <button class="btn-primary" onclick="generateLuauScript()">⚡ Generate Luau Script</button>
                     </div>
 
+                    <!-- Code Output Panel -->
                     <div class="preview-panel card">
                         <div class="code-header">
                             <h3>Output Script.lua</h3>
-                            <button class="btn-secondary" onclick="copyScript()">Copy Code</button>
+                            <div class="code-actions">
+                                <button class="btn-secondary" onclick="copyScript()">📋 Copy Code</button>
+                                <button class="btn-secondary" onclick="downloadScript()">💾 Save .lua</button>
+                            </div>
                         </div>
-                        <pre><code id="scriptOutput" class="language-lua">-- Select a script type and click generate</code></pre>
+                        <pre><code id="scriptOutput" class="language-lua">-- Click "Generate Luau Script" to build your script</code></pre>
                     </div>
                 </div>
             </section>
